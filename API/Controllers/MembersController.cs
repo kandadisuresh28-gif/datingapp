@@ -18,6 +18,7 @@ namespace API.Controllers
         }
 
          [HttpGet("{Id}")]
+         //test
          public ActionResult<AppUser> GetMember(String Id)
         {
             var memver =context.Users.Find(Id);
