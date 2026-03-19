@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -10,18 +12,18 @@ namespace API.Controllers
     public class MembersController(AppDbContext context) : ControllerBase
     {
         [HttpGet]
-        public ActionResult<IReadOnlyList<AppUser>> GetMembers()
+        public async Task<ActionResult<IReadOnlyList<AppUser>>> GetMembers()
         {
-            var members = context.Users.ToList();
+            var members = await context.Users.ToListAsync();
 
             return members;
         }
 
          [HttpGet("{Id}")]
          //test
-         public ActionResult<AppUser> GetMember(String Id)
+         public async Task<ActionResult<AppUser>> GetMember(String Id)
         {
-            var memver =context.Users.Find(Id);
+            var memver = await context.Users.FindAsync(Id);
 
             if ( memver==null) return NotFound() ;
 
